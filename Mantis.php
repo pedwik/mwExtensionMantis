@@ -58,7 +58,7 @@ $wgMantisConf['ResolutionString'] = '10:open,20:fixed,30:reopened,40:unable to d
 // create an array from a properly formatted string
 function createArray( $string )
 {
-	$array = [];
+	$array = array();
 	$entries = explode(',', $string);
 
 	foreach ($entries as $entry)
@@ -111,8 +111,8 @@ function wfMantis( &$parser )
 // only return values from that array which also exist in the database
 function intersectArrays( $dbcontext, $prefix, $table, $column, $checkArray )
 {
-	$databaseRecords = [];
-	$newArray = [];
+	$databaseRecords = array();
+	$newArray = array();
 	$dbQuery = "select $column from ${prefix}$table";
 	if ($result = ${dbcontext}->query($dbQuery))
 	{
@@ -143,7 +143,7 @@ function intersectArrays( $dbcontext, $prefix, $table, $column, $checkArray )
 
 function parseRanges( $items, $rangeOperators )
 {
-	$newArray = [];
+	$newArray = array();
 
 	$op = substr(trim($items[0]), 0, 2);
 	$val = substr(trim($items[0]), 2);
@@ -195,7 +195,7 @@ function renderMantis( $input, $args, $mwParser )
 	$conf['table']             = 'sortable';
 	$conf['header']            = true;
 	$conf['color']             = true;
-	$conf['status']            = ['open'];
+	$conf['status']            = array('open');
 	$conf['severity']          = NULL;
 	$conf['count']             = NULL;
 	$conf['orderby']           = 'b.last_updated';
@@ -206,7 +206,7 @@ function renderMantis( $input, $args, $mwParser )
 	$conf['summarylength']     = NULL;
 	$conf['project']           = NULL;
 	$conf['category']          = NULL;
-	$conf['show']              = ['id','category','severity','status','updated','summary'];
+	$conf['show']              = array('id','category','severity','status','updated','summary');
 	$conf['comment']           = NULL;
 	$conf['fixed_in_version']  = NULL;
 	$conf['fixed_in_versionR'] = NULL;
@@ -219,10 +219,10 @@ function renderMantis( $input, $args, $mwParser )
 	$conf['headername']        = NULL;
 	$conf['align']             = NULL;
 
-	$tableOptions   = ['sortable', 'standard', 'noborder'];
+	$tableOptions   = array('sortable', 'standard', 'noborder');
 	$orderbyOptions = createArray($columnNames);
 
-	$rangeOperators = ['gt' => '>', 'ge' => '>=', 'lt' => '<', 'le' => '<='];
+	$rangeOperators = array('gt' => '>', 'ge' => '>=', 'lt' => '<', 'le' => '<=');
 
 	$mantis['status']     = createArray($wgMantisConf['StatusString']);
 	$mantis['color']      = createArray($wgMantisConf['StatusColors']);
@@ -247,7 +247,7 @@ function renderMantis( $input, $args, $mwParser )
 		switch ($type)
 		{
 			case 'bugid':
-				$bugid = [];
+				$bugid = array();
 				$bugids = explode(',', $arg);
 				foreach ($bugids as $bug)
 				{
@@ -267,7 +267,7 @@ function renderMantis( $input, $args, $mwParser )
 				}
 				break;
 			case 'status':
-				$arrayNew = [];
+				$arrayNew = array();
 				$items = explode(',', $arg);
 				foreach ($items as $item)
 				{
@@ -316,7 +316,7 @@ function renderMantis( $input, $args, $mwParser )
 			case 'sortkey':
 			case 'ordermethod':
 				$tmpOrderBy = $arg;
-				$orderbyNew = [];
+				$orderbyNew = array();
 				$items = explode(',', $tmpOrderBy);
 				foreach ($items as $item)
 				{
@@ -369,7 +369,7 @@ function renderMantis( $input, $args, $mwParser )
 				$conf['dateformat'] = $arg;
 				break;
 			case 'show':
-				$showNew = [];
+				$showNew = array();
 				$columns = explode(',', $arg);
 				foreach ($columns as $column)
 				{
@@ -386,7 +386,7 @@ function renderMantis( $input, $args, $mwParser )
 				break;
 			case 'resolution':
 			case 'severity':
-				$arrayNew = [];
+				$arrayNew = array();
 				$items = explode(',', $arg);
 				foreach ($items as $item)
 				{
@@ -619,7 +619,7 @@ function renderMantis( $input, $args, $mwParser )
 			}
 			else
 			{
-				$statusNumbers = [];
+				$statusNumbers = array();
 				// get the numerical values for status names
 				foreach ($conf['status'] as $status)
 				{
@@ -637,7 +637,7 @@ function renderMantis( $input, $args, $mwParser )
 
 		if ($conf['severity'])
 		{
-			$severityNumbers = [];
+			$severityNumbers = array();
 			// get the numerical values for severity names
 			foreach ($conf['severity'] as $sev)
 			{
@@ -649,7 +649,7 @@ function renderMantis( $input, $args, $mwParser )
 
 		if ($conf['resolution'])
 		{
-			$resolutionNumbers = [];
+			$resolutionNumbers = array();
 			// get the numerical values for resolution names
 			foreach ($conf['resolution'] as $res)
 			{
@@ -743,7 +743,7 @@ function renderMantis( $input, $args, $mwParser )
 		}
 		else
 		{
-			$orderby = [];
+			$orderby = array();
 			foreach ($conf['orderby'] as $col => $order)
 			{
 				$orderby[] = "$col $order";
@@ -777,7 +777,7 @@ function renderMantis( $input, $args, $mwParser )
 			}
 			else
 			{
-				$orderby = [];
+				$orderby = array();
 				foreach ($conf['orderby'] as $col => $order)
 				{
 					$orderby[] = "$col $order";
